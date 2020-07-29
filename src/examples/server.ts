@@ -1,13 +1,13 @@
 require('dotenv').config();
 
 import express from 'express';
-import { LinkedInProfileScraper } from '../index';
+import { LinkedInActivitiesScraper } from '../index';
 
 const app = express();
 
 (async () => {
   // Setup environment variables to fill the sessionCookieValue
-  const scraper = new LinkedInProfileScraper({
+  const scraper = new LinkedInActivitiesScraper({
     sessionCookieValue: `${process.env.LINKEDIN_SESSION_COOKIE_VALUE}`,
     keepAlive: true,
   })

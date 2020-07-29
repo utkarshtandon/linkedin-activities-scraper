@@ -1,9 +1,9 @@
 require('dotenv').config();
 
-import { LinkedInProfileScraper } from '../index';
+import { LinkedInActivitiesScraper } from '../index';
 
 (async () => {
-  const scraper = new LinkedInProfileScraper({
+  const scraper = new LinkedInActivitiesScraper({
     sessionCookieValue: `${process.env.LINKEDIN_SESSION_COOKIE_VALUE}`,
     // Keep the scraper alive after each scrape
     // So we can scrape multiple pages
