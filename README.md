@@ -1,11 +1,11 @@
 ------
-# LinkedIn Activies Scraper (based on LinkedIn Profil Scraper by jvandenaardweg)
-LinkedIn activies scraper using Puppeteer headless browser. So you can use it on a server. Returns array of urn-activity in JSON format. Works in 2020.
+# LinkedIn Activities Scraper (based on LinkedIn Profil Scraper by jvandenaardweg)
+LinkedIn activities scraper using Puppeteer headless browser. So you can use it on a server. Returns array of urn-activity in JSON format. Works in 2020.
 
 This scraper will extract each `data-urn` of linkedIn user's activities:
 
 ## Getting started
-In order to scrape LinkedIn activies, you need to make sure the scraper is logged-in into LinkedIn. For that you need to find your account's session cookie. I suggest creating a new account on LinkedIn and enable all the privacy options so people don't see you visiting their activies when using the scraper.
+In order to scrape LinkedIn activities, you need to make sure the scraper is logged-in into LinkedIn. For that you need to find your account's session cookie. I suggest creating a new account on LinkedIn and enable all the privacy options so people don't see you visiting their activities when using the scraper.
 
 1. Create a new account on LinkedIn, or use one you already have
 2. Login to that account using your browser
@@ -36,7 +36,7 @@ import { LinkedInActivitiesScraper } from 'linkedin-activities-scraper';
 })()
 ```
 
-See [src/examples](https://github.com/JustinMartinDev/linkedin-activies-scraper/tree/master/src/examples) for more examples.
+See [src/examples](https://github.com/JustinMartinDev/linkedin-activities-scraper/tree/master/src/examples) for more examples.
 
 See [Example response](#example-response) for an example response.
 
