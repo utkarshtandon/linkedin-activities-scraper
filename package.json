@@ -1,6 +1,6 @@
 {
   "name": "linkedin-activities-scraper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "LinkedIn activities scraper returning structured activites data in JSON. Works in 2020.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
