@@ -58,7 +58,7 @@ interface ScraperOptions {
     timeout: number;
     headless: boolean;
 }
-/*
+
 async function autoScroll(page: Page) {
     await page.evaluate(() => {
         return new Promise((resolve, reject) => {
@@ -77,7 +77,7 @@ async function autoScroll(page: Page) {
         });
     });
 }
-*/
+
 
 export class LinkedInActivitiesScraper {
     readonly options: ScraperOptions = {
@@ -446,10 +446,11 @@ export class LinkedInActivitiesScraper {
             });
 
             statusLog(logSection, 'LinkedIn profile activites page loaded!', scraperSessionId)
-            //await autoScroll(page);
+            await autoScroll(page);
 
             statusLog(logSection, 'Parsing data...', scraperSessionId)
 
+            /*
             // Only click the expanding buttons when they exist
             const activityType = '.pv-recent-activity-detail__pill.mr2.artdeco-pill.artdeco-pill--slate.artdeco-pill--3.artdeco-pill--toggle.ember-view';
             const activityPost = '.feed-shared-update-v2.feed-shared-update-v2--minimal-padding.relative.full-height.feed-shared-update-v2--e2e.Elevation-2dp.ember-view';
@@ -460,8 +461,11 @@ export class LinkedInActivitiesScraper {
                 articles: "",
                 documents: ""
             };
+            */
 
             /*============= GET ===============*/
+
+            /*
             await page.$$eval(activityType, anchors => {
                 anchors.forEach(async (anchor, index) => {
                     // @ts-ignore
@@ -469,6 +473,24 @@ export class LinkedInActivitiesScraper {
                     await page.waitFor(2000);
                     result[activitiesProp[index]] = await page.$$eval(activityPost, posts => posts.map(post => post.getAttribute("data-urn")));
                 });
+            });*/
+
+            const activityPost = '.pv-recent-activity-detail__outlet-container';
+
+            const result = yield page.$$eval(activityPost, (nodes) => {
+
+                let data = [];
+                for (const node of nodes) {
+                    console.log(node);
+                    var containers = node.querySelectorAll('div.feed-shared-update-v2');
+                    containers.forEach(function(element) {
+                        const urn = element.getAttribute("data-urn");
+                        data.push({urn});   
+                    });
+                    
+             
+                }
+                return data;
             });
 
             if (!this.options.keepAlive) {
