@@ -8,7 +8,7 @@ import {getHostname, statusLog} from './utils'
 import {SessionExpired} from './errors';
 
 
-const activitiesProp = ["all", "posts", "documents", "articles"];
+//const activitiesProp = ["all", "posts", "documents", "articles"];
 
 interface ScraperUserDefinedOptions {
     /**
@@ -477,9 +477,9 @@ export class LinkedInActivitiesScraper {
 
             const activityPost = '.pv-recent-activity-detail__outlet-container';
 
-            const result = yield page.$$eval(activityPost, (nodes) => {
-
-                let data = [];
+            const result = await page.$$eval(activityPost, (nodes) => {
+   
+                const data = [] as  any;
                 for (const node of nodes) {
                     console.log(node);
                     var containers = node.querySelectorAll('div.feed-shared-update-v2');
