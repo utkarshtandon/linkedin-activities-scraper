@@ -434,11 +434,18 @@ export class LinkedInActivitiesScraper {
 
         try {
             // Eeach run has it's own page
-            const page = await this.createPage();
+            var page;
 
-            statusLog(logSection, `Navigating to LinkedIn profile activites: ${profileUrl}/detail/recent-activity/`, scraperSessionId)
+            try {
+                  page = await this.createPage();
+            } catch (error) {
+                  throw new Error('Error creating page')
+            }
+            
 
-            await page.goto(`${profileUrl}/detail/recent-activity/`, {
+            statusLog(logSection, `Navigating to LinkedIn profile activites: ${profileUrl}detail/recent-activity/`, scraperSessionId)
+
+            await page.goto(`${profileUrl}detail/recent-activity/`, {
                 // Use "networkidl2" here and not "domcontentloaded".
                 // As with "domcontentloaded" some elements might not be loaded correctly, resulting in missing data.
                 waitUntil: 'networkidle2',
@@ -485,8 +492,15 @@ export class LinkedInActivitiesScraper {
                     var containers = node.querySelectorAll('div.feed-shared-update-v2');
                     containers.forEach(function(element) {
                         const urn = element.getAttribute("data-urn");
-                        data.push({urn});   
+
+                        const text_div = element.querySelector("div.feed-shared-text");
+                        const actual = text_div?.querySelector("span")?.querySelector("span")?.querySelector("span");
+
+                        const act_text = (actual?.innerText || actual?.textContent);
+
+                        data.push({urn,act_text});   
                     });
+
                     
              
                 }
