@@ -450,7 +450,7 @@ export class LinkedInActivitiesScraper {
                 // As with "domcontentloaded" some elements might not be loaded correctly, resulting in missing data.
                 waitUntil: 'networkidle2',
                 timeout: this.options.timeout
-            });
+            }).catch(() => {});
 
             statusLog(logSection, 'LinkedIn profile activites page loaded!', scraperSessionId)
             await autoScroll(page);

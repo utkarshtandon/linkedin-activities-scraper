@@ -240,12 +240,18 @@ class LinkedInActivitiesScraper {
             if (profileUrl.charAt(profileUrl.length - 1) !== "/")
                 profileUrl = profileUrl.concat("/");
             try {
-                const page = yield this.createPage();
-                utils_1.statusLog(logSection, `Navigating to LinkedIn profile activites: ${profileUrl}/detail/recent-activity/`, scraperSessionId);
-                yield page.goto(`${profileUrl}/detail/recent-activity/`, {
+                var page;
+                try {
+                    page = yield this.createPage();
+                }
+                catch (error) {
+                    throw new Error('Error creating page');
+                }
+                utils_1.statusLog(logSection, `Navigating to LinkedIn profile activites: ${profileUrl}detail/recent-activity/`, scraperSessionId);
+                yield page.goto(`${profileUrl}detail/recent-activity/`, {
                     waitUntil: 'networkidle2',
                     timeout: this.options.timeout
-                });
+                }).catch(() => { });
                 utils_1.statusLog(logSection, 'LinkedIn profile activites page loaded!', scraperSessionId);
                 yield autoScroll(page);
                 utils_1.statusLog(logSection, 'Parsing data...', scraperSessionId);
@@ -256,8 +262,12 @@ class LinkedInActivitiesScraper {
                         console.log(node);
                         var containers = node.querySelectorAll('div.feed-shared-update-v2');
                         containers.forEach(function (element) {
+                            var _a, _b;
                             const urn = element.getAttribute("data-urn");
-                            data.push({ urn });
+                            const text_div = element.querySelector("div.feed-shared-text");
+                            const actual = (_b = (_a = text_div === null || text_div === void 0 ? void 0 : text_div.querySelector("span")) === null || _a === void 0 ? void 0 : _a.querySelector("span")) === null || _b === void 0 ? void 0 : _b.querySelector("span");
+                            const act_text = ((actual === null || actual === void 0 ? void 0 : actual.innerText) || (actual === null || actual === void 0 ? void 0 : actual.textContent));
+                            data.push({ urn, act_text });
                         });
                     }
                     return data;
